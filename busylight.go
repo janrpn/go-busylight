@@ -1,7 +1,6 @@
 package led
 
 import (
-	"fmt"
 	"image/color"
 	"time"
 
@@ -36,7 +35,6 @@ func init() {
 			return newBusyLight(d, func(c color.Color) {
 				r, g, b, _ := c.RGBA()
 				d.Write([]byte{0x00, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00})
-				fmt.Println([]byte{0x00, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00})
 			}), nil
 		},
 	})
@@ -64,7 +62,7 @@ func newBusyLight(d hid.Device, setcolorFn func(c color.Color)) *busylightDev {
 				setcolorFn(curColor)
 			case <-closeChan:
 				ticker.Stop()
-				setcolorFn(color.Black) // turn off device
+				setcolorFn(color.White) // turn off device
 				d.Close()
 				closed = true
 			}
