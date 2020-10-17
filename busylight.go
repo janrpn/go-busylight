@@ -1,10 +1,11 @@
 package led
 
 import (
+	"encoding/hex"
+	"fmt"
+	"github.com/baaazen/go-hid"
 	"image/color"
 	"time"
-
-	"github.com/baaazen/go-hid"
 )
 
 // Device type: BusyLight UC
@@ -35,6 +36,8 @@ func init() {
 			return newBusyLight(d, func(c color.Color) {
 				r, g, b, _ := c.RGBA()
 				d.Write([]byte{0x00, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00})
+				encodedStr := hex.EncodeToString([]byte{0x00, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00})
+				fmt.Printf("%s\n", encodedStr)
 			}), nil
 		},
 	})
