@@ -35,7 +35,7 @@ func init() {
 		Open: func(d hid.Device) (Device, error) {
 			return newBusyLight(d, func(c color.Color) {
 				r, g, b, _ := c.RGBA()
-				buff := []byte{0x01}
+				buff := []byte{0x10}
 				buff = append(buff, 00)
 				buff = append(buff, byte(r>>8))
 				buff = append(buff, byte(g>>8))
